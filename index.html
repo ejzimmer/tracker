@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Track stuff</title>
+</head>
+<body>
+  <button onclick="signin()">Sign in</button>
+  <div id="signed-in"></div>
+
+
+  <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase-database.js"></script>  
+  <script>
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyBa5g4Ce9bpxrXArDm6KU7LSfg1nMJfVfg",
+      authDomain: "tracker-619d6.firebaseapp.com",
+      databaseURL: "https://tracker-619d6.firebaseio.com",
+      projectId: "tracker-619d6",
+      storageBucket: "tracker-619d6.appspot.com",
+      messagingSenderId: "1074784658036"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const authProvider = new firebase.auth.GithubAuthProvider();
+
+    function signin() {
+      firebase.auth().signInWithRedirect(authProvider);
+    }
+
+    firebase.auth().getRedirectResult().then((result) => {
+      const user = firebase.auth().currentUser;
+      if (user) {
+        document.getElementById('signed-in').textContent = `Signed in as ${user.email}`;
+        document.querySelector('button').style.display = 'none';
+      }
+    }).catch((error) => {
+      console.error(`${error.code}: ${error.message}`);
+      console.error(`${error.credential}`);
+    });
+
+    const database = firebase.database();
+  </script>
+</body>
+</html>
