@@ -5,45 +5,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Track stuff</title>
-</head>
-<body>
-  <button onclick="signin()">Sign in</button>
-  <div id="signed-in"></div>
-
-
-  <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase-database.js"></script>  
-  <script>
-    
-    const firebaseConfig = {
-      apiKey: "AIzaSyBa5g4Ce9bpxrXArDm6KU7LSfg1nMJfVfg",
-      authDomain: "tracker-619d6.firebaseapp.com",
-      databaseURL: "https://tracker-619d6.firebaseio.com",
-      projectId: "tracker-619d6",
-      storageBucket: "tracker-619d6.appspot.com",
-      messagingSenderId: "1074784658036"
-    };
-    firebase.initializeApp(firebaseConfig);
-
-    const authProvider = new firebase.auth.GithubAuthProvider();
-
-    function signin() {
-      firebase.auth().signInWithRedirect(authProvider);
+  <style>
+    * {
+      box-sizing: border-box;
     }
 
-    firebase.auth().getRedirectResult().then((result) => {
-      const user = firebase.auth().currentUser;
-      if (user) {
-        document.getElementById('signed-in').textContent = `Signed in as ${user.email}`;
-        document.querySelector('button').style.display = 'none';
-      }
-    }).catch((error) => {
-      console.error(`${error.code}: ${error.message}`);
-      console.error(`${error.credential}`);
-    });
+    body {
+      --blue: 187;
+      --text-colour: hsl(var(--blue), 81%, 61%);
+      --background-colour: #333;
+      background: var(--background-colour);
+      color: var(--text-colour);
+      font-family: sans-serif;
+      margin: 0;
+    }
 
-    const database = firebase.database();
-  </script>
+    header {
+      padding: 20px;
+      text-align: right;
+      border-bottom: 2px solid currentColor;
+    }
+
+    button {
+      background: transparent;
+      border: 1px solid var(--text-colour);
+      color: var(--text-colour);
+      cursor: pointer;
+    }
+
+    .bar {
+      fill: hsl(22, 81%, 61%);
+    }
+
+    .toast {
+      color: var(--background-colour);
+      background-color: hsl(var(--blue), 81%, 61%);
+      padding: .5em;
+      display: inline;
+      position: absolute;
+      right: 10vw;
+      bottom: 50vh;
+      opacity: 0;
+    }
+    .toast.toasted {  
+      animation: toast 3s ease-out forwards;
+    }
+    @keyframes toast {
+      40% {
+        transform: translateY(-40vh);
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+        transform: translateY(-40vh);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-40vh);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button id="sign-in" onclick="signin()">Sign in</button>
+    <div id="signed-in"></div>    
+  </header>
+
+  <main>
+    <track-button thing="🍺"></track-button>
+    <details open>
+      <summary>Show history</summary>
+      <svg id="graph" width="400" height="300"></svg>
+    </details>
+    <div class="toast">
+      6 🍺 today
+    </div>
+  </main>
+
+  <script src="dist/main.js"></script>
+  
 </body>
 </html>

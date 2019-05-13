@@ -8,5 +8,11 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "d3": "^5.9.2",
+    "firebase": "^5.11.0",
+    "firebase-tools": "^6.7.2",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1"
+  }
 }

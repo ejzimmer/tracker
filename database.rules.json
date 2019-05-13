@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "users": {
+      ".read": "auth.uid != null && query.equalTo == auth.id",
+      ".write": "auth.uid != null && query.equalTo == auth.id"
+    }
+  }
+}
